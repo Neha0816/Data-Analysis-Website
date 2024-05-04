@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+
+    <style>
+        {% comment %} body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        } {% endcomment %}
+
+        
+        h1 {
+            position: sticky;
+            top: 0;
+            background-color: white; /* Match background color */
+            z-index: 1000; /* Ensure it's above other content */
+            width: 100%; /* Full width */
+            margin-top: 0; /* Remove default margin */
+            padding: 20px; /* Add padding for spacing */
+            text-align: center; /* Center the text */
+            font-size: 24px; /* Adjust font size */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+        }
+        /* Common styles */
+        .histogram-container,
+        .scatter-container,
+        .boxplot-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Adjust the gap between visualizations */
+        }
+
+        .histogram-item,
+        .scatter-item,
+        .boxplot-item {
+            flex: 0 0 calc(50% - 20px);
+            /* Display two items per row */
+            max-width: 400px;
+            /* Limit the maximum width of each visualization */
+        }
+
+        .histogram-img,
+        .scatter-img,
+        .boxplot-img {
+            width: 100%;
+            height: auto;
+            /* Maintain aspect ratio */
+            border: 1px solid #ccc;
+            /* Add border for visualization */
+        }
+
+        .pairplot-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Adjust the gap between pair plots */
+            margin-top: 20px;
+            /* Add some top margin */
+        }
+
+        .pairplot-item {
+            flex: 0 0 calc(50% - 20px);
+            /* Display two pair plots per row */
+            max-width: 400px;
+            /* Limit the maximum width of each pair plot */
+        }
+
+        .pairplot-img {
+            width: 100%;
+            height: auto;
+            /* Maintain aspect ratio */
+            border: 1px solid #ccc;
+            /* Add border for visualization */
+        }
+
+        
+
+        h1 {
+            width: 20%; /* Adjust width as needed */
+            margin: 30px auto;
+            font-size: 50px;
+          }
+          
+          
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            text-decoration: none;
+            border: 1px solid #3e8e41; /* Green border */
+            border-radius: 5px;
+            margin-left: 10px;
+            margin-top: 20px;        }
+        
+        .download-button:hover {
+            background-color: #3e8e41; /* Darker green on hover */
+        }
+        {% comment %} .analysis-section {
+            padding: 19px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-section:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        .analysis-section:nth-child(odd) {
+            background-color: #fbfbfb;
+        } {% endcomment %}
+    </style>
+</head>
+
+<body>
+    <h1>Analysis Result</h1>
+    
+    <div>
+        <h2>Cleaned Data (First 10 Rows):</h2>
+        {{ cleaned_data|safe }}
+    </div>
+    <div>
+        <!-- Download button -->
+        {% if cleaned_data %}
+        <a href="{% url 'download_results' %}" class="download-button">Download Full Cleaned Dataset</a>
+        {% endif %}
+    </div>
+    <div>
+        {% if descriptive_stats %}
+        <h2>Descriptive Statistics:</h2>
+        {{ descriptive_stats|safe }}
+        {% endif %}
+    </div>
+    <div  >
+        {% if descriptive_stats %}
+        <a href="{% url 'download_descriptive_stats' %}" class="download-button">Download Descriptive Stats</a>
+        {% endif %}
+    </div>
+    <div >
+        {% if regression_output %}
+        <h2>Regression Analysis Result:</h2>
+        {{ regression_output|safe }}
+        {% endif %}
+    </div>
+    <div>
+        {% if regression_output %}
+        <a href="{% url 'download_regression_results' %}" class="download-button">Download Regression Results</a>
+        {%endif%}
+    </div>
+    <div>
+        {% if correlation_output %}
+        <h2>Correlation Analysis Result:</h2>
+        {{ correlation_output|safe }}
+        {% endif %}
+    </div>
+    <div>
+        {% if correlation_output %}
+        <a href="{% url 'download_correlation_results' %}" class="download-button">Download Correlation Results</a>
+        {% endif %}
+    </div>
+    
+    {% comment %}
+    <div>
+        {% if clustering_output %}
+        <h3>Clustering Analysis Result:</h3>
+        {{ clustering_output|safe }}
+        {% endif %}
+    </div>
+    {% endcomment %}
+    <div>
+        {% if outlier_output %}
+        <h2>Outlier Detection Result:</h2>
+        <div class="outlier-container">
+            <div class="outlier-output">
+                {{ outlier_output|safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div>
+        {% if outlier_output %}
+        <a href="{% url 'download_outlier_results' %}" class="download-button">Download Outlier Results</a>
+        {% endif %}
+    </div>
+    <div>
+        {% if histogram_plots %}
+        <h2>Histograms</h2>
+        <div class="histogram-container">
+            {% for column, plot in histogram_plots.items %}
+            <div class="histogram-item">
+                <h4>{{ column }}</h4>
+                <img class="histogram-img" src="data:image/png;base64,{{ plot }}" alt="{{ column }} histogram">
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'download_histogram_plots' %}" class="download-button">Download Histogram Plots</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div>
+        {% if scatter_plots %}
+        <h2>Scatter Plots</h2>
+        <div class="scatter-container">
+            {% for column, plot in scatter_plots.items %}
+            <div class="scatter-item">
+                <h4>{{ column }}</h4>
+                <img class="scatter-img" src="data:image/png;base64,{{ plot }}" alt="{{ column }} scatter plot">
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'download_scatter_plots' %}" class="download-button">Download Scatter Plots</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div>
+        {% if boxplot_plots %}
+        <h2>Boxplots</h2>
+        <div class="boxplot-container">
+            {% for column, plot in boxplot_plots.items %}
+            <div class="boxplot-item">
+                <h4>{{ column }}</h4>
+                <img class="boxplot-img" src="data:image/png;base64,{{ plot }}" alt="{{ column }} boxplot">
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'download_boxplot_plots' %}" class="download-button">Download Box Plot Plots</a>
+        </div>
+        {% endif %}
+    </div>
+    <div>
+        {% if pair_plots %}
+        <h2>Pair Plots</h2>
+        <div class="pairplot-container">
+            {% for pair, plot in pair_plots.items %}
+            <div class="pairplot-item">
+                <h4>{{ pair }}</h4>
+                <img class="pairplot-img" src="data:image/png;base64,{{ plot }}" alt="{{ pair }} pair plot">
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'download_pair_plots' %}" class="download-button">Download Pair Plots</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

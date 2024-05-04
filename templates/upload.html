@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block body %}
+
+<style>
+  @media (max-width: 768px) {
+    .container {
+      height: auto; /* Adjust height for smaller screens */
+    }
+
+    .card {
+      margin-top: 3rem; /* Adjust margin for better layout on small screens */
+    }
+
+    .form-group {
+      margin-top: 1.5rem; /* Adjust margin for better spacing on small screens */
+    }
+  }
+
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .container {
+    height: 140vh; /* Adjust height as needed */
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 1rem; /* Increased corner radius */
+  }
+
+  .card-header {
+    background-color: #00b8d4; /* More vibrant primary color */
+    color: #fff;
+    border-radius: 1rem 1rem 0 0; /* Rounded top corners */
+  }
+
+  h2 {
+    font-family: "Lato", sans-serif; /* Example font, choose your preferred one */
+    font-weight: bold;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5; /* Adjust line spacing for readability */
+  }
+  
+  .form-group {
+    margin-top: 2rem;
+  }
+  
+  {% comment %} .form-group label {
+    font-weight: bold;
+  } {% endcomment %}
+  
+  .checkbox {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .checkbox label {
+    vertical-align: middle;
+  }
+
+  .progress {
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    background-color: #00b8d4; /* Same as primary color */
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  
+  #uploadBtn:disabled {
+    background-color: #ccc; /* Disable button styling */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+  }
+  
+  .card-header h2 {
+    font-size: 24px;
+  }
+
+  .file-upload-wrapper {
+    position: relative;
+  }
+
+  .file-upload {
+    display: none;
+  }
+
+  .file-upload-label {
+    display: block;
+    background-color: #00b8d4;
+    color: #fff;
+    text-align: center;
+    padding: 15px 30px; /* More padding for comfort */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .file-upload-label:hover {
+    background-color: #0087a8; /* Darker shade on hover */
+  }
+
+  .btn-primary {
+    background-color: #00b8d4;
+    border-color: #00b8d4;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0087a8; /* Darker shade on hover */
+    border-color: #0087a8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary:focus,
+  .btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* Focus effect */
+  }
+
+  .modal-content {
+    background-color: #fff;
+    border-radius: 0.5rem;
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card border-0 shadow-lg p-4 mt-5 rounded-lg">
+        <h2 class="text-center mb-4">Upload Your Data File</h2>
+        <p class="text-muted text-center mb-4">Follow these simple steps to upload your data for analysis:</p>
+        <ol>
+          <li><b>Select your data file</b>: Click the "Choose File" button and browse to your data file on your computer. Accepted file formats include CSV (.csv) and Excel (.xlsx).</li>
+          <li><b>Choose analysis types </b>: Select the checkboxes next to the analysis types you want to perform on your data. You can choose multiple options.</li>
+          <li><b>Click "Upload"</b>: Once you've selected your file and analysis types, click the "Upload" button to begin the upload process.</li>
+        </ol>
+        <div class="file-upload-wrapper">
+          <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="dataFile" class="file-upload" name="dataFile" accept=".csv,.xlsx,.txt" onchange="updateFileName()">
+            <label for="dataFile" class="file-upload-label">Choose File</label>
+            <span id="fileName" class="text-muted"></span>
+            
+            <div class="form-group">
+                <label style="font-weight: bold">Select Analysis Type(s):</label><br>
+                <input type="checkbox" id="descriptive" name="analysis_type" value="descriptive">
+                <label for="descriptive">Descriptive Statistics</label><br>
+                
+                <input type="checkbox" id="regression" name="analysis_type" value="regression">
+                <label for="regression">Regression</label><br>
+                
+                <input type="checkbox" id="correlation" name="analysis_type" value="correlation">
+                <label for="correlation">Correlation</label><br>
+                  
+                <input type="checkbox" id="outlier" name="analysis_type" value="outlier">
+                <label for="outlier">Outlier</label><br>
+                
+                {% comment %} <input type="checkbox" id="clustering" name="analysis_type" value="clustering">
+                <label for="clustering">Clustering</label><br> {% endcomment %}
+
+                <label style="font-weight: bold">Select Visualization Type(s):</label><br>
+                <input type="checkbox" id="histogram" name="analysis_type" value="histogram">
+                <label for="histogram">Histogram</label><br> 
+                
+                <input type="checkbox" id="scatter" name="analysis_type" value="scatter">
+                <label for="scatter">Scatter</label><br> 
+                
+                <input type="checkbox" id="boxplot" name="analysis_type" value="boxplot">
+                <label for="boxplot">Boxplot</label><br> 
+
+                <input type="checkbox" id="pairplot" name="analysis_type" value="pairplot">
+                <label for="pairplot">Pair Plot</label><br>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block mt-4" id="uploadBtn">Upload & Analyze</button>
+        </form>
+        
+          <small class="text-muted d-block mt-2">Accepted file formats: .csv, .xlsx, .txt</small>
+        </div>
+        {% if messages %}
+        <div class="mt-4">
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateFileName() {
+    var fileName = document.getElementById("dataFile").files[0].name;
+    document.getElementById("fileName").textContent = "Selected File: " + fileName;
+  }
+</script>
+
+{% endblock %}

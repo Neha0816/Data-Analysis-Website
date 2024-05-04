@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <title> {% block title %}{% endblock title %} | DataInsightPro</title>
+  <style>
+    body {
+      padding-top: 50px;
+    }
+
+    .logo {
+      max-height: 75px;
+      margin-right: 15px;
+      border-radius: 50px;
+      margin-left: 0px;
+    }
+
+    .navbar-dark .navbar-brand {
+      color: black;
+      font-weight: bold;
+    }
+
+    .navbar-dark .navbar-brand:hover {
+      color: black;
+    }
+
+    .navbar-nav .nav-item {
+      margin-right: 2rem;
+      /* Adjust the value to your preference */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: black;
+    }
+
+    .navbar-dark .navbar-nav .active>.nav-link,
+    .navbar-dark .navbar-nav .nav-link.active,
+    .navbar-dark .navbar-nav .nav-link.show,
+    .navbar-dark .navbar-nav .show>.nav-link {
+      color: black;
+    }
+
+    .navbar {
+      border-radius: 100px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      padding: 0.75rem 1.5rem;
+      /* Adjust the padding to keep the content within the border */
+      margin-left: 3rem;
+      /* Adjust the margin to keep the navbar aligned */
+      margin-right: 3rem;
+      /* Adjust the margin to keep the navbar aligned */
+      background-color: rgba(255, 255, 255, 0.5);
+      /* Set the background color with transparency */
+    }
+
+    .navbar-brand {
+      display: inline-block;
+      padding-top: .3125rem;
+      padding-bottom: .3125rem;
+      margin-right: 1rem;
+      font-size: 2.00rem;
+      line-height: inherit;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        max-height: 50px;
+        /* Decrease logo size */
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+        /* Decrease font size for brand name */
+      }
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: bold;
+      font-size: 25px;
+      color: black;
+      border-bottom: 2px solid transparent;
+      /* Add initial border */
+      transition: border-bottom-color 0.3s ease;
+      /* Add transition effect */
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: black !important;
+      border-bottom-color: black;
+      /* Add border color on hover */
+    }
+
+    .navbar-toggler-icon {
+      background-color: black;
+      /* Change the background color to black */
+      border-color: white;
+      /* Change the border color to black */
+    }
+
+    @media (max-width: 768px) {
+      .navbar-nav {
+        background-color: transparent;
+        border: none;
+        /* Remove border */
+        padding: 0px;
+        /* Remove padding */
+      }
+
+      .navbar-collapse {
+        background-color: rgba(255, 255, 255, 0.5);
+        /* Set background color */
+        border-radius: 30px;
+        /* Add border radius */
+        padding: 10px;
+        /* Add padding */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Add shadow */
+        margin-top: 15px;
+        /* Add margin to separate from the navbar */
+        margin-bottom: 20px;
+        /* Add margin at the bottom */
+      }
+
+      .nav-item {
+        margin-bottom: 20px;
+        /* Add margin between items */
+      }
+
+      .nav-link {
+        padding: 10px 20px;
+        /* Add padding to each link */
+        border-radius: 20px;
+        /* Add border radius */
+        border: 2px solid transparent;
+        /* Add initial border */
+        transition: border-color 0.3s ease;
+        /* Add transition effect */
+      }
+
+      .nav-link:hover {
+        border-color: black;
+        /* Change border color on hover */
+      }
+    }
+
+
+    footer {
+      position: relative;
+      background: rgba(46, 229, 242, 0.622);
+      width: 100%;
+      min-height: 150px;
+      padding: 20px 50px;
+      flex-direction: column;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer ul {
+      display: flex;
+      justify-content: center;
+    }
+
+    footer ul li {
+      list-style: none;
+    }
+
+    footer .footer-icons {
+      height: 45px;
+      object-fit: contain;
+      margin: 0 20px;
+      transition: all ease-out 150ms;
+      z-index: 1;
+    }
+
+    footer .footer-icons:hover {
+      transform: translateY(-8px);
+      color: black;
+    }
+
+    footer .footer-link {
+      margin: 0 20px;
+      text-decoration: none;
+      font-size: 24px;
+      color: #242121;
+      font-weight: 600;
+      letter-spacing: 0.25px;
+      transition: all ease-in 150ms;
+
+    }
+
+    footer li:hover,
+    .footer-link:hover {
+      transform: scale(1.05);
+    }
+
+    footer .wave {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url("https://th.bing.com/th/id/OIP.xWb-14U2ecUnlZgYKQ1eKQHaC7?w=282&h=138&c=7&r=0&o=5&dpr=1.6&pid=1.7");
+      background-size: 1000px 100px;
+      
+    }
+
+    footer #wave1 {
+      z-index: 1000;
+      opacity: 1;
+      bottom: 0;
+      animation: animatedWave 4s linear infinite;
+    }
+
+    footer #wave2 {
+      z-index: 999;
+      opacity: 0.75;
+      bottom: 10px;
+      animation: animatedWave_02 4s linear infinite;
+    }
+
+    footer #wave3 {
+      z-index: 998;
+      opacity: 0.5;
+      bottom: 20px;
+      animation: animatedWave 3s linear infinite;
+    }
+
+    footer #wave4 {
+      z-index: 1000;
+      opacity: 0.25;
+      bottom: 30px;
+      animation: animatedWave_02 2s linear infinite;
+    }
+
+    @media only screen and (max-width: 768px) {
+      footer {
+        padding: 20px 30px;
+        /* Adjust padding for smaller screens */
+      }
+
+      footer .footer-link {
+        font-size: 18px;
+        /* Decrease font size for smaller screens */
+      }
+
+      footer .footer-icons {
+        height: 35px;
+        /* Decrease icon size for smaller screens */
+      }
+
+      footer #wave1,
+      footer #wave2,
+      footer #wave3,
+      footer #wave4 {
+        display: none;
+        /* Hide waves on smaller screens */
+      }
+    }
+
+    @keyframes animatedWave {
+      0% {
+        background-position-x: 1000px;
+      }
+
+      100% {
+        background-position-x: 0;
+      }
+    }
+
+    @keyframes animatedWave_02 {
+      0% {
+        background-position-x: 0;
+      }
+
+      100% {
+        background-position-x: 1000px;
+      }
+    }
+
+
+    .footer-rights {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .footer-rights {
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <a class="navbar-brand" href="#">
+      <img src="/static/img/logo.jpeg" alt="Logo" class="logo">DataInsightPro</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'home' %}">
+            <i class="fa fa-home fa-fw"></i> Home <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">
+            <i class="fa fa-info-circle fa-fw"></i> About Us
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">
+            <i class="fa fa-envelope fa-fw"></i> Contact Us
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">
+            <i class="fa fa-sign-out fa-fw"></i> Logout
+          </a>
+
+        </li>
+        {% comment %}
+        <li class="nav-item">
+          <a class="nav-link" href="contact">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact">Login</a>
+        </li>
+        {% endcomment %}
+      </ul>
+    </div>
+  </nav>
+
+
+  {% block body %}{% endblock body %}
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-waves">
+      <div class="wave" id="wave1"></div>
+      <div class="wave" id="wave2"></div>
+      <div class="wave" id="wave3"></div>
+      <div class="wave" id="wave4"></div>
+    </div>
+    <ul>
+
+      <li>
+      <li class="footer-icons"><a href="#"><i class="fa fa-youtube fa-lg"></i></ion-icon>
+        </a></li>
+
+      <li class="footer-icons"><a href="#"><i class="fa fa-instagram fa-lg"></i>
+        </a></li>
+
+      <li class="footer-icons"><a href="#"><i class="fa fa-facebook fa-lg"></i>
+        </a></li>
+
+      <li class="footer-icons"><a href="#"><i class="fa fa-linkedin fa-lg"></i>
+        </a></li>
+
+    </ul>
+    <ul class="footer-links">
+      <li><a class="footer-link" href="{% url 'home' %}">Home</a></li>
+      <li><a class="footer-link" href="{% url 'about' %}">About us</a></li>
+      <li><a class="footer-link" href="{% url 'contact' %}">Help</a></li>
+    </ul>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="footer-rights col-md-12">© 2024 DataInsightPro. All rights reserved.</div>
+  </footer>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

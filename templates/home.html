@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+  
+  .background-container {
+    position: relative;
+    background-image: url('/static/img/bg.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 10%;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .main {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .dataAnalysis {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center; /* Center align text */
+  }
+
+  .devInfo {
+    font-family: 'Source Code Pro', monospace;
+    margin: 0 20px;
+  }
+
+  .name {
+    font-size: 3em; /* Increased font size */
+    font-weight: bold;
+    font-family: 'Fira Sans', sans-serif;
+    margin-bottom: 20px; /* Increased margin for spacing */
+  }
+
+  .moreabout {
+    font-size: 1.8em; /* Increased font size */
+    font-family: 'Fira Sans', sans-serif;
+    margin-bottom: 30px; /* Increased margin for spacing */
+  }
+
+  .buttons {
+    margin-top: 20px;
+  }
+
+  .buttons button {
+    padding: 15px 30px;
+    border-radius: 22px;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: lightgray; /* Lighter button color */
+    border: none;
+    position: relative;
+    font-weight: bold; /* Increase font weight */
+  }
+
+  .buttons button i.arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .buttons button:hover {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 768px) {
+    .name {
+      font-size: 2.5em; /* Adjusted font size */
+    }
+    .moreabout {
+      font-size: 1.5em; /* Adjusted font size */
+    }
+    .buttons button {
+      padding: 12px 24px; /* Adjusted padding */
+      font-size: 1.1em; /* Adjusted font size */
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .name {
+      font-size: 2em; /* Adjusted font size */
+    }
+    .moreabout {
+      font-size: 1.2em; /* Adjusted font size */
+    }
+    .buttons button {
+      padding: 10px 20px; /* Adjusted padding */
+      font-size: 1em; /* Adjusted font size */
+    }
+  }
+</style>
+<div class="background-container">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="main">
+      <div class="dataAnalysis">
+        <div class="devInfo">
+          <div class="name">Welcome to the world of Data</div>
+          <div class="moreabout">Here you'll find valuable insights, trends, and analysis for various datasets.</div>
+          <div class="buttons">
+            <a href="{% url 'upload' %}"><button>Get Started <i class="arrow right"></i></button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

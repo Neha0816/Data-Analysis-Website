@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Footer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        footer {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* Hide overflowing waves */
+            background-color: #f8f9fa; /* Grey background color */
+            padding-top: 50px;
+        }
+
+        .wave {
+            position: absolute;
+            width: 100%;
+            height: 100px; /* Adjust wave height */
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, #e0e0e0 20%, #f8f9fa 50%, #e0e0e0 80%); /* Grey gradient background */
+            animation: waveAnimation 10s infinite linear; /* Wave animation */
+            transform-origin: bottom;
+        }
+
+        @keyframes waveAnimation {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer-text {
+            font-size: 18px;
+            color: #555; /* Dark grey text color */
+        }
+    </style>
+</head>
+<body>
+    <footer>
+        <div class="wave"></div>
+        <div class="content">
+            <p class="footer-text">© 2024 DataInsightPro. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
